@@ -17,7 +17,6 @@ d3.selection.prototype.moveToFront = function() {
 var active = null;
 
 var highlightFiltered = function(selected, ftrs) {
-  console.log(selected);
   if (active === selected) {
     selected = null;
   }
@@ -38,18 +37,20 @@ var highlightFiltered = function(selected, ftrs) {
     /* Show Model Details */
     if (selected === null) {
       var modelElement = document.getElementById("model");
-      var ftr_list = document.getElementById("features");
-      modelElement.innerHTML = "<h4>None</h4>";
-      ftr_list.innerHTML = "";
+      modelElement.innerHTML = "<p>Click on individual data points to see model details</p>";
     } else {
       var parts = selected.split("_");
       var rmse = parts[2];
       var ftr_count = parts[0];
       var modelElement = document.getElementById("model");
-      modelElement.innerHTML = "<h4>RMSE: <small class='text-muted'>" + rmse + "</small></h4>"
-                              + "<h4>Features: <small class='text-muted'>" + ftr_count + "</small></h4>";
-      var ftr_list = document.getElementById("features");
+      modelElement.innerHTML = "<h4>RMSE: " + rmse + "</h4>"
+                              + "<h4>Features (" + ftr_count + "): </h4>";
+      var ftr_list = document.createElement("ul");
+      ftr_list.classList.add("list-group");
+      ftr_list.classList.add("list-group-flush");
+      ftr_list.classList.add("card");
       ftr_list.innerHTML = "";
+      modelElement.appendChild(ftr_list);
       for(var i=0; i < ftrs.length; i++) {
         var li = document.createElement('li');
         li.classList.add("list-group-item");
@@ -84,6 +85,13 @@ d3.json("data/predictions.json", function(d) {
       models = d["models"],
       predictions = d["predictions"]
       features = d["features"];
+
+  var title = document.getElementById("title");
+  var sub = document.createElement("small");
+  sub.classList.add("text-muted");
+  sub.innerHTML = " Using " + models.length + " Support Vector Regression models*";
+  title.appendChild(sub);
+
 
   /* Scale data to w/h ranges */
   var x = d3.scale.linear().domain([xmin, xmax ]).range([0, w+pad]);
@@ -128,7 +136,7 @@ d3.json("data/predictions.json", function(d) {
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .style("fill", text_color)
-      .text("Value");
+      .text("Compound");
 
   var circles = svg.selectAll("circle").data(predictions);
 
