@@ -165,4 +165,13 @@ d3.json("data/predictions.json", function(d) {
         }
       });
 
+    svg.append("line")
+         .attr("x1", x(2))
+         .attr("x2", x(2))
+         .attr("y1", 0 - margin.top)
+         .attr("y2", h)
+         .attr("stroke-width", 2)
+         .attr("stroke", "#666")
+         .attr("opacity", 0.5);
+
 });
