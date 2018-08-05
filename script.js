@@ -60,7 +60,7 @@ var highlightFiltered = function(selected, ftrs) {
 }
 
 /***************** Build Scatter Plot *********************/
-var margin = {top: 10, right: 30, bottom: 70, left: 100 },
+var margin = {top: 10, right: 200, bottom: 70, left: 100 },
     w = 600,
     h = 500,
     pad = 20,
