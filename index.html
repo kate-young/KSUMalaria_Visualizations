@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <style>
 .axis path,
 .axis line {
@@ -19,12 +19,74 @@
 }
 
 .circle {
-    fill: #222;
+    fill: #B8B8B8;
+    opacity: 0.5;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px 10px;
+    font: 14px sans-serif;
+    font-weight:100;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(102, 102, 102, 0.8);
+    opacity: 0.5;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+.viz {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+}
+#filter {
+  font: 9pt sans-serif;
+}
+#model {
+  background: #fff;
+}
+.list-group-item {
+  font-size: 10pt;
+  padding: 5px 20px;
+}
+.list-group {
+  height: 520px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+body {
+  color: #666;
+}
+h4 {
+  display: inline-block;
+  padding-right: 20px;
+}
+h1 {
+  padding: 20px 0px;
 }
 </style>
 
-
-<div id="viz"></div>
+<div class="container-fluid">
+  <h1 class="border-bottom">Malaria Research Project</h1>
+  <div class="row">
+    <div class="col-12 col-md-7">
+      <h2>IC50 Predictions</h2>
+      <p> Click on individual data points to see model details. </p>
+      <div id="viz"></div>
+    </div>
+    <div class="col-12 col-md-5">
+      <h3>Selected Model</h3>
+      <div id="model">
+        <h4>None</h4>
+      </div>
+      <ul  id="features" class="list-group list-group-flush"></ul>
+    </div>
+  </div>
+</div>
+</div>
 
 <script src="http://d3js.org/d3.v2.min.js"></script>
 <script src="script.js"></script>
