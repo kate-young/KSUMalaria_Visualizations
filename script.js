@@ -1,3 +1,6 @@
+var domain = "https://cors.io/?u=https://kate-young.github.io/KSUMalaria_Visualizations";
+var dataurl = domain + "/predictions.json";
+
 /***************** Scatter Plot Tooltips *********************/
 var formatTooltip = function(compound, model, prediction) {
   var parts = model.split("_");
@@ -78,7 +81,7 @@ var svg = d3.select("#viz")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("predictions.json", function(d) {
+d3.json(dataurl, function(d) {
 
 
   var compounds = d["compounds"],
