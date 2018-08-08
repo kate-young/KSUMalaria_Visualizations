@@ -78,7 +78,7 @@ var svg = d3.select("#viz")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data/predictions.json", function(d) {
+d3.json("predictions.json", function(d) {
 
 
   var compounds = d["compounds"],
