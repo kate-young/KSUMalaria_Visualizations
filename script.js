@@ -83,6 +83,7 @@ var svg = d3.select("#viz")
 
 d3.json(dataurl, function(error, d) {
   if (error) throw error;
+  console.log(d);
 
   var compounds = d["compounds"],
       models = d["models"],
