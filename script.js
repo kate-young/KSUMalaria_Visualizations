@@ -99,9 +99,9 @@ d3.json(dataurl).then(function(d) {
   var y = d3.scaleLinear().domain([0,compounds.length-1]).range([h-pad, 0]);
 
   /* Define X-Axis */
-  var xAxis = d3.axisLeft().scale(x);
+  var xAxis = d3.axisBottom().scale(x);
   /* Define Y-Axis */
-  var yAxis = d3.axisBottom().scale(y)
+  var yAxis = d3.axisLeft().scale(y)
           .ticks(compounds.length)
           .tickFormat(function (d, i) {
               return compounds[d];
