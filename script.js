@@ -97,8 +97,8 @@ d3.json(dataurl, function(d) {
 
 
   /* Scale data to w/h ranges */
-  var x = d3.scale.linear().domain([xmin, xmax ]).range([0, w+pad]);
-  var y = d3.scale.linear().domain([0,compounds.length-1]).range([h-pad, 0]);
+  var x = d3.scaleLinear().domain([xmin, xmax ]).range([0, w+pad]);
+  var y = d3.scaleLinear().domain([0,compounds.length-1]).range([h-pad, 0]);
 
   /* Define X-Axis */
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
