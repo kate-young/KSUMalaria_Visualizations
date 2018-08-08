@@ -147,24 +147,22 @@ d3.json(dataurl).then(function(d) {
       .attr("cx", function (d) { return x(d[2])})
       .attr("cy", function (d) { return y(d[3])})
       .attr("r", 4)
-      .on({
-        "mouseover": function(d) {
+      .on("mouseover", function(d) {
           div.transition()
              .duration(200)
              .style("opacity", 0.95);
           div.html(formatTooltip(d[0], d[1], d[2]))
             .style("left", (d3.event.pageX)+ "px")
             .style("top", (d3.event.pageY - 80) + "px");
-        },
-        "mouseout": function(d) {
+        })
+       .on("mouseout", function(d) {
           div.transition()
             .duration(500)
             .style("opacity", 0);
-        },
-        "click": function(d) {
+        })
+       .on("click", function(d) {
           highlightFiltered(d[1], features[d[1]]);
-        }
-      });
+        });
 
     svg.append("line")
          .attr("x1", x(2))
