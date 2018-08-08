@@ -101,7 +101,7 @@ d3.json(dataurl).then(function(d) {
   /* Define X-Axis */
   var xAxis = d3.axisLeft().scale(x);
   /* Define Y-Axis */
-  var yAxis = d3.axisBottom().scale(y).
+  var yAxis = d3.axisBottom().scale(y)
           .ticks(compounds.length)
           .tickFormat(function (d, i) {
               return compounds[d];
