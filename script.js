@@ -1,4 +1,4 @@
-var domain = "https://cors.io/?u=https://kate-young.github.io/KSUMalaria_Visualizations";
+var domain = "https://kate-young.github.io/KSUMalaria_Visualizations";
 var dataurl = domain + "/predictions.json";
 
 /***************** Scatter Plot Tooltips *********************/
