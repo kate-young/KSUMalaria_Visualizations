@@ -96,16 +96,12 @@ d3.json(dataurl).then(function(d) {
 
   /* Scale data to w/h ranges */
   var x = d3.scaleLinear().domain([xmin, xmax ]).range([0, w+pad]);
-  var y = d3.scaleLinear().domain([0,compounds.length-1]).range([h-pad, 0]);
+  var y = d3.scalePoint().domain(compounds).range([h-pad, 0]);
 
   /* Define X-Axis */
   var xAxis = d3.axisBottom().scale(x);
   /* Define Y-Axis */
-  var yAxis = d3.axisLeft().scale(y)
-          .ticks(compounds.length)
-          .tickFormat(function (d, i) {
-              return compounds[d];
-          });
+  var yAxis = d3.axisLeft().scale(y);
 
   var div = d3.select("#viz").append("div")
       .attr("class", "tooltip")
@@ -145,7 +141,7 @@ d3.json(dataurl).then(function(d) {
       .append("circle")
       .attr("class", "circle")
       .attr("cx", function (d) { return x(d[2])})
-      .attr("cy", function (d) { return y(d[3])})
+      .attr("cy", function (d) { return y(d[0])})
       .attr("r", 4)
       .on("mouseover", function(d) {
           div.transition()
