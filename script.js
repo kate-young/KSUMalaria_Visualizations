@@ -1,6 +1,6 @@
-/*var domain = "https://cors.io/?https://kate-young.github.io/KSUMalaria_Visualizations";
-var dataurl = domain + "/data/predictions.json";*/
-var domain = "http://localhost:8000"
+var domain = "https://cors.io/?https://kate-young.github.io/KSUMalaria_Visualizations";
+/*var dataurl = domain + "/data/predictions.json";
+var domain = "http://localhost:8000"*/
 var dataurl = domain + "/data/predictions.json";
 
 /***************** Scatter Plot Tooltips *********************/
