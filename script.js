@@ -1,5 +1,7 @@
-var domain = "https://cors.io/?https://kate-young.github.io/KSUMalaria_Visualizations";
-var dataurl = domain + "/predictions.json";
+/*var domain = "https://cors.io/?https://kate-young.github.io/KSUMalaria_Visualizations";
+var dataurl = domain + "/data/predictions.json";*/
+var domain = "http://localhost:8000"
+var dataurl = domain + "/data/predictions.json";
 
 /***************** Scatter Plot Tooltips *********************/
 var formatTooltip = function(compound, model, prediction) {
@@ -63,6 +65,47 @@ var highlightFiltered = function(selected, ftrs) {
     }
 }
 
+var confidenceIntervals = function(data, x, y) {
+  var lines = svg.selectAll(".line").data(data);
+
+  lines.enter()
+      /*.append("marker")
+      .attr("id", "dot")*/
+      .append("line")
+      .attr("class", "line")
+      .attr("x1", function(d) { return x(d.min < xmin ? xmin:d.min); })
+      .attr("x2", function(d) { return x(d.max > xmax ? xmax:d.max); })
+      .attr("y1", function(d) { return y(d.Compound); })
+      .attr("y2", function(d) { return y(d.Compound); })
+      .attr("stroke-width", 2)
+      .attr("stroke", "#666")
+      .attr("opacity", 1);
+
+  var min_lines = svg.selectAll(".min_line").data(cis);
+  min_lines.enter()
+     .append("line")
+     .attr("class", "min_line")
+     .attr("x1", function(d) { return x(d.min < xmin ? xmin:d.min); })
+     .attr("x2", function(d) { return x(d.min < xmin ? xmin:d.min);})
+     .attr("y1", function(d) { return d.min < xmin ? y(d.Compound):y(d.Compound)-5; })
+     .attr("y2", function(d) { return d.min < xmin ? y(d.Compound):y(d.Compound)+5; })
+     .attr("stroke-width", 2)
+     .attr("stroke", "#666")
+     .attr("opacity", 1);
+
+  var min_lines = svg.selectAll(".max_line").data(cis);
+  min_lines.enter()
+     .append("line")
+     .attr("class", "max_line")
+     .attr("x1", function(d) { return x(d.max > xmax ? xmax:d.max); })
+     .attr("x2", function(d) { return x(d.max > xmax ? xmax:d.max); })
+     .attr("y1", function(d) { return d.max > xmax ? 0:y(d.Compound)-5; })
+     .attr("y2", function(d) { return d.max > xmax ? 0:y(d.Compound)+5; })
+     .attr("stroke-width", 2)
+     .attr("stroke", "#666")
+     .attr("opacity", 1);
+}
+
 /***************** Build Scatter Plot *********************/
 var margin = {top: 10, right: 200, bottom: 70, left: 100 },
     w = 600,
@@ -79,13 +122,15 @@ var svg = d3.select("#viz")
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top +  ")");
 
+var cis;
 d3.json(dataurl).then(function(d) {
   var compounds = d["compounds"],
       models = d["models"],
-      predictions = d["predictions"]
+      predictions = d["predictions"],
       features = d["features"];
+      cis= d["ci"];
 
   var title = document.getElementById("title");
   var sub = document.createElement("small");
@@ -95,7 +140,7 @@ d3.json(dataurl).then(function(d) {
 
 
   /* Scale data to w/h ranges */
-  var x = d3.scaleLinear().domain([xmin, xmax ]).range([0, w+pad]);
+  var x = d3.scaleLinear().domain([xmin, xmax]).range([0, w+pad]);
   var y = d3.scalePoint().domain(compounds).range([h-pad, 0]);
 
   /* Define X-Axis */
@@ -160,13 +205,7 @@ d3.json(dataurl).then(function(d) {
           highlightFiltered(d[1], features[d[1]]);
         });
 
-    svg.append("line")
-         .attr("x1", x(2))
-         .attr("x2", x(2))
-         .attr("y1", 0 - margin.top)
-         .attr("y2", h)
-         .attr("stroke-width", 2)
-         .attr("stroke", "#666")
-         .attr("opacity", 0.5);
+   /* Confidence Intervals */
+   confidenceIntervals(cis, x, y);
 
 });

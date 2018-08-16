@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 import numpy as np
-
+import re
 
 p1 = pd.read_csv("predictions.csv").set_index("Name")
 p2 = pd.read_csv("predictions2.csv").set_index("Name")
@@ -32,9 +32,14 @@ for m in models:
     ftrs = list(ftr_data.loc[ftr_data[m] > 0, m].index.values)
     features[m] = ftrs
 
+ci = pd.read_csv("ci_99.csv")
+ci.loc[:, "min"] = [float(re.search(r"\((-?\d+.\d+)", x).group(1)) for x in ci["CI Interval"]]
+ci.loc[:, "max"] = [float(re.search(r",\s(-?\d+.\d+)\)", x).group(1)) for x in ci["CI Interval"]]
+
 with open("predictions.json", 'w') as outfile:
     json.dump({"compounds": compounds,
         "models": models,
         "predictions": predictions,
-        "features": features
+        "features": features,
+        "ci": ci[["Compound", "min", "max"]].to_dict("records")
     }, outfile)
