@@ -26,6 +26,8 @@ var highlightFiltered = function(selected, ftrs) {
     selected = null;
   }
   active = selected;
+  d3.select("svg").selectAll(".line")
+    .moveToFront()
   d3.select("svg").selectAll("circle")
     .select(function(d) { return d[1] === selected? this : null; })
     .moveToFront()
@@ -84,7 +86,7 @@ var confidenceIntervals = function(data, x, y) {
   var min_lines = svg.selectAll(".min_line").data(cis);
   min_lines.enter()
      .append("line")
-     .attr("class", "min_line")
+     .attr("class", "line min_line")
      .attr("x1", function(d) { return x(d.min < xmin ? xmin:d.min); })
      .attr("x2", function(d) { return x(d.min < xmin ? xmin:d.min);})
      .attr("y1", function(d) { return d.min < xmin ? y(d.Compound):y(d.Compound)-5; })
@@ -96,7 +98,7 @@ var confidenceIntervals = function(data, x, y) {
   var min_lines = svg.selectAll(".max_line").data(cis);
   min_lines.enter()
      .append("line")
-     .attr("class", "max_line")
+     .attr("class", "line max_line")
      .attr("x1", function(d) { return x(d.max > xmax ? xmax:d.max); })
      .attr("x2", function(d) { return x(d.max > xmax ? xmax:d.max); })
      .attr("y1", function(d) { return d.max > xmax ? 0:y(d.Compound)-5; })
@@ -205,7 +207,7 @@ d3.json(dataurl).then(function(d) {
           highlightFiltered(d[1], features[d[1]]);
         });
 
-   /* Confidence Intervals */
-   confidenceIntervals(cis, x, y);
+    /* Confidence Intervals */
+    confidenceIntervals(cis, x, y);
 
 });
