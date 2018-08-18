@@ -43,3 +43,7 @@ with open("predictions.json", 'w') as outfile:
         "features": features,
         "ci": ci[["Compound", "min", "max"]].to_dict("records")
     }, outfile)
+
+tsne = pd.read_csv("tsne.csv")
+with open("tsne.json", "w") as outfile:
+    json.dump(tsne.to_dict("records"), outfile)
