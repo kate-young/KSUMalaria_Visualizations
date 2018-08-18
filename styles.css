@@ -1,0 +1,82 @@
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.loading {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+.circle {
+    fill: #B8B8B8;
+    opacity: 0.5;
+}
+
+.line {
+  marker-end: "url(#arrow)";
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px 10px;
+    font: 14px sans-serif;
+    font-weight:100;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(102, 102, 102, 0.8);
+    opacity: 0.5;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+.viz {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+}
+#filter {
+  font: 9pt sans-serif;
+}
+#model {
+  background: #fff;
+}
+.list-group-item {
+  font-size: 10pt;
+  padding: 5px 20px;
+}
+.list-group {
+  max-height: 450px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+body {
+  color: #666;
+}
+h1 {
+  padding: 20px 0px;
+}
+h2 .text-muted {
+  font-size: 14pt;
+}
+h4 {
+  font-weight: 100;
+  font-size: 14pt;
+}
+img {
+  float: right;
+  width: 100px;
+  height: 25px;
+  padding: 20px 10px;
+}
+p {
+  font-size: 10pt;
+}
