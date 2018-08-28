@@ -1,6 +1,6 @@
 /*var domain = "https://cors.io/?https://kate-young.github.io/KSUMalaria_Visualizations";*/
 var domain = "http://localhost:8000";
-var dataurl = domain + "/data/feature_importance.json";
+var dataurl = "/data/feature_importance.json";
 
 /***************** Build Scatter Plot *********************/
 var margin = { top: 10, right: 200, bottom: 70, left: 200 },
