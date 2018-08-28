@@ -47,3 +47,7 @@ with open("predictions.json", 'w') as outfile:
 tsne = pd.read_csv("tsne.csv")
 with open("tsne.json", "w") as outfile:
     json.dump(tsne.to_dict("records"), outfile)
+
+f_imp = pd.read_csv("feature_importance.csv")
+with open("feature_importance.json", "w") as outfile:
+    json.dump(f_imp.sort_values(by="selected_percent", ascending=False).to_dict("records"), outfile)
