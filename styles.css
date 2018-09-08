@@ -19,7 +19,7 @@
     fill: #B8B8B8;
     opacity: 0.5;
 }
-.bar .active {
+.active {
   fill: #85B8FF;
 }
 .mean {

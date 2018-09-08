@@ -10,14 +10,14 @@ var margin = { top: 10, right: 200, bottom: 70, left: 200 },
     pad = 20,
     lowlight_color = "#B8B8B8",
     highlight_color = "#85B8FF",
-    text_color = "#666";
+    text_color = "#333";
 
 var svg = d3.select("#viz")
         .append("svg")
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + (margin.top + 20) + ")");
+        .attr("transform", "translate(" + margin.left + "," + (margin.top + 75) + ")");
 
 var chart1 = svg.append("g")
       .attr("class", "chart1")
@@ -47,6 +47,14 @@ d3.json(dataurl).then(function(d) {
   var yAxis = d3.axisLeft().scale(y);
   var x1Axis = d3.axisTop().scale(x1);
   var x2Axis = d3.axisTop().scale(x2);
+
+  /* Define Tooltip Div */
+  var div = d3.select("body")
+    	.append("div")  // declare the tooltip div
+    	.attr("class", "tooltip")              // apply the 'tooltip' class
+    	.style("opacity", 0);
+
+
 
   chart1.append("g")
       .attr("class", "axis")
@@ -119,7 +127,24 @@ d3.json(dataurl).then(function(d) {
          .attr("class", "circle mean")
          .attr('cx', function(d)  { return x2(d["coef_mean"]); })
          .attr('cy', function(d)  { return y(d["feature"]); })
-         .attr('r', 3);
+         .attr('r', 3)
+         .on("mouseover", function(d) {
+            div.transition()
+       				.duration(500)
+       				.style("opacity", 0);
+       			div.transition()
+       				.duration(200)
+       				.style("opacity", .9);
+       			div.html(d3.format(".3f")(d.coef_mean)
+                      + "</br>(" + d3.format(".3f")(d.min_99_coef) +", "+d3.format(".3f")(d.max_99_coef) +")")
+       				.style("left", (d3.event.pageX) + "px")
+       				.style("top", (d3.event.pageY - 28) + "px");
+       			})
+          .on("mouseout", function(d) {
+               div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+             });
 
   var bars = chart1.selectAll("rect").data(data);
   bars.enter()
@@ -128,11 +153,36 @@ d3.json(dataurl).then(function(d) {
     .attr("y", function(d) { return y(d["feature"]); })
     .attr("width", function(d) {return x1(d["selected_percent"]); })
     .attr("height", function(d) { return y.bandwidth()*0.8; })
-    .on("mouseover", function() {
-      d3.select(this).attr("class", "bar active");
-    })
-    .on("mouseout", function() {
-      d3.select(this).attr("class", "bar");
-    });
+    .on("mouseover", function(d) {
+       div.transition()
+         .duration(500)
+         .style("opacity", 0);
+       div.transition()
+         .duration(200)
+         .style("opacity", .9);
+       div.html(d3.format(".0%")(d.selected_percent))
+         .style("left", (d3.event.pageX) + "px")
+         .style("top", (d3.event.pageY - 28) + "px");
+       })
+     .on("mouseout", function(d) {
+          div.transition()
+            .duration(500)
+            .style("opacity", 0);
+      });
 
+  svg.append("text")
+        .attr("transform",
+              "translate(" + (w/4) + " ," +
+                             (-50) + ")")
+        .style("text-anchor", "middle")
+        .style("fill", text_color)
+        .text("% of Models Selected");
+
+  svg.append("text")
+        .attr("transform",
+              "translate(" + (w*0.75 + 50) + " ," +
+                             (-50) + ")")
+        .style("text-anchor", "middle")
+        .style("fill", text_color)
+        .text("Estimated Coefficient");
 });
